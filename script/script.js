@@ -1,7 +1,7 @@
 function salvarCarros(event) {
     // Impedir  de recarregar a página
     event.preventDefault();
-  
+
     let titulo = document.getElementById("title").value;
     let preco = document.getElementById("preco").value;
     let descricao = document.getElementById("descricao").value;
@@ -9,40 +9,40 @@ function salvarCarros(event) {
     let modelo = document.getElementById("modelo").value;
     let kilometragem = document.getElementById("kilometragem").value;
     let data_compra = document.getElementById("data_compra").value
-  
+
     let cambioSelecionado = document.querySelector(
-      "input[name='marcha']:checked"
+        "input[name='marcha']:checked"
     );
-  
+
     let cambio = cambioSelecionado ? cambioSelecionado.id : "Não informado";
-  
+
     let lista = document.getElementById("listarCarros");
-  
+
     let carro = {
-      titulo,
-      preco,
-      descricao,
-      marca,
-      modelo,
-      kilometragem,
-      data_compra,
-      cambio,
+        titulo,
+        preco,
+        descricao,
+        marca,
+        modelo,
+        kilometragem,
+        data_compra,
+        cambio,
     };
-  
+
     let carros = JSON.parse(localStorage.getItem("carros")) || [];
     carros.push(carro);
     localStorage.setItem("carros", JSON.stringify(carros));
-  
+
     adicionarNaTela(carro);
-  
+
     document.querySelector("form").reset();
-  }
-  
-  function adicionarNaTela(carro) {
+}
+
+function adicionarNaTela(carro) {
     let lista = document.getElementById("listarCarros");
     let cartao = document.createElement("div");
     cartao.classList.add("cartao");
-  
+
     cartao.innerHTML = `
       <img src ='https://picsum.photos/250/150?grayscale&random=${Math.random()}"'>
       <h3>${carro.titulo}</h3>
@@ -53,19 +53,19 @@ function salvarCarros(event) {
 
       <button onclick="excluirCarro(${carro.id}, this)">Excluir</button>
       `;
-  
-    lista.appendChild(cartao);
-  }
-  
-  window.onload = function () {
-    let carros = JSON.parse(localStorage.getItem("carros")) || [];
-  
-    carros.forEach((carro) => {
-      adicionarNaTela(carro);
-    });
-  };
 
-  function excluirCarro(id, botao) {
+    lista.appendChild(cartao);
+}
+
+window.onload = function () {
+    let carros = JSON.parse(localStorage.getItem("carros")) || [];
+
+    carros.forEach((carro) => {
+        adicionarNaTela(carro);
+    });
+};
+
+function excluirCarro(id, botao) {
     let carros = JSON.parse(localStorage.getItem("carros")) || [];
 
     carros = carros.filter(carro => Number(carro.id) !== Number(id));
@@ -74,4 +74,4 @@ function salvarCarros(event) {
 
     let cartao = botao.parentElement;
     cartao.remove();
-  }
+}
